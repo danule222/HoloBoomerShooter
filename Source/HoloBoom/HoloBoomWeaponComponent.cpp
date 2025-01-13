@@ -2,7 +2,7 @@
 
 
 #include "HoloBoomWeaponComponent.h"
-#include "HoloBoomCharacter.h"
+#include "Player/HLB_Player.h"
 #include "HoloBoomProjectile.h"
 #include "GameFramework/PlayerController.h"
 #include "Camera/PlayerCameraManager.h"
@@ -66,7 +66,7 @@ void UHoloBoomWeaponComponent::Fire()
 	}
 }
 
-bool UHoloBoomWeaponComponent::AttachWeapon(AHoloBoomCharacter* TargetCharacter)
+bool UHoloBoomWeaponComponent::AttachWeapon(AHLB_Player* TargetCharacter)
 {
 	Character = TargetCharacter;
 

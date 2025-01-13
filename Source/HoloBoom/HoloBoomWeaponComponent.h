@@ -6,7 +6,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "HoloBoomWeaponComponent.generated.h"
 
-class AHoloBoomCharacter;
+class AHLB_Player;
 
 UCLASS(Blueprintable, BlueprintType, ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class HOLOBOOM_API UHoloBoomWeaponComponent : public USkeletalMeshComponent
@@ -43,7 +43,7 @@ public:
 
 	/** Attaches the actor to a FirstPersonCharacter */
 	UFUNCTION(BlueprintCallable, Category="Weapon")
-	bool AttachWeapon(AHoloBoomCharacter* TargetCharacter);
+	bool AttachWeapon(AHLB_Player* TargetCharacter);
 
 	/** Make the weapon Fire a Projectile */
 	UFUNCTION(BlueprintCallable, Category="Weapon")
@@ -56,5 +56,5 @@ protected:
 
 private:
 	/** The Character holding this weapon*/
-	AHoloBoomCharacter* Character;
+	AHLB_Player* Character;
 };

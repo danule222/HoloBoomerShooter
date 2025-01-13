@@ -16,11 +16,12 @@ void UHoloBoomPickUpComponent::BeginPlay()
 	OnComponentBeginOverlap.AddDynamic(this, &UHoloBoomPickUpComponent::OnSphereBeginOverlap);
 }
 
-void UHoloBoomPickUpComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+void UHoloBoomPickUpComponent::OnSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	// Checking if it is a First Person Character overlapping
-	AHoloBoomCharacter* Character = Cast<AHoloBoomCharacter>(OtherActor);
-	if(Character != nullptr)
+	AHLB_Player* Character = Cast<AHLB_Player>(OtherActor);
+	if (Character != nullptr)
 	{
 		// Notify that the actor is being picked up
 		OnPickUp.Broadcast(Character);
