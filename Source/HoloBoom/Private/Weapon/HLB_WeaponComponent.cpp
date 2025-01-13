@@ -2,6 +2,8 @@
 
 #include "Weapon/HLB_WeaponComponent.h"
 
+#include "Weapon/HLB_Weapon.h"
+
 // Sets default values for this component's properties
 UHLB_WeaponComponent::UHLB_WeaponComponent()
 {
@@ -26,4 +28,9 @@ void UHLB_WeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+}
+
+void UHLB_WeaponComponent::SetWeapon(UHLB_Weapon* Weapon)
+{
+	UE_LOG(LogTemp, Warning, TEXT("%s"), *Weapon->Name.ToString());
 }

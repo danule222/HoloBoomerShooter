@@ -21,9 +21,6 @@ public:
 	UHLB_Weapon();
 	~UHLB_Weapon();
 
-	void Shoot();
-
-private:
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMesh* Mesh;
 	UPROPERTY(EditDefaultsOnly)
@@ -36,4 +33,6 @@ private:
 	int32 Speed;
 	UPROPERTY(EditDefaultsOnly)
 	UTexture2D* Crosshair;
+
+	void Shoot();
 };
