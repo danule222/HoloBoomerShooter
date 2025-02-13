@@ -19,7 +19,7 @@ AHLB_Pickup::AHLB_Pickup()
 
 		if (PickupComponent)
 		{
-			PickupComponent->AttachToComponent(StaticMeshComponent, FAttachmentTransformRules::KeepRelativeTransform);
+			StaticMeshComponent->AttachToComponent(PickupComponent, FAttachmentTransformRules::KeepRelativeTransform);
 		}
 	}
 }

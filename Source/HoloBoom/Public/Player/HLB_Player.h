@@ -12,6 +12,7 @@ class UInputAction;
 class UInputComponent;
 class UCameraComponent;
 class UInputMappingContext;
+class UHLB_HealthComponent;
 class UHLB_WeaponComponent;
 class USkeletalMeshComponent;
 
@@ -62,4 +63,6 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
 	UHLB_WeaponComponent* WeaponComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Health, meta = (AllowPrivateAccess = "true"))
+	UHLB_HealthComponent* HealthComponent;
 };

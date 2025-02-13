@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Core/ActorComponents/HLB_HealthComponent.h"
 #include "Engine/LocalPlayer.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
@@ -36,6 +37,9 @@ AHLB_Player::AHLB_Player()
 
 	// Weapon component
 	WeaponComponent = CreateDefaultSubobject<UHLB_WeaponComponent>(TEXT("WeaponComponent"));
+
+	// Health component
+	HealthComponent = CreateDefaultSubobject<UHLB_HealthComponent>(TEXT("HealthComponent"));
 }
 
 void AHLB_Player::NotifyControllerChanged()

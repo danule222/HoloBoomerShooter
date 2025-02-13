@@ -12,5 +12,5 @@ UHLB_Weapon::~UHLB_Weapon()
 
 void UHLB_Weapon::Shoot()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Shoot"));
+	UE_LOG(LogTemp, Warning, TEXT("Pium - %s"), *Name.ToString());
 }
