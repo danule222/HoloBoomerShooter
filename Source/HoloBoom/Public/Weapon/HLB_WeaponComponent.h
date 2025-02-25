@@ -33,14 +33,14 @@ public:
 	void SetWeapon(UHLB_Weapon* Weapon);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	TSubclassOf<UHLB_Weapon> Weapons;
+	TSubclassOf<UHLB_Weapon> InitialWeapon;
 
 private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UInputMappingContext* FireMappingContext;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UInputAction* FireAction;
-
+	UPROPERTY()
 	UHLB_Weapon* Weapon;
 
 	void Shoot();

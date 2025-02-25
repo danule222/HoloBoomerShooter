@@ -81,6 +81,14 @@ void AHLB_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	}
 }
 
+void AHLB_Player::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (UWorld* World = GetWorld())
+		World->DebugDrawTraceTag = TEXT("Shoot trace");
+}
+
 void AHLB_Player::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D

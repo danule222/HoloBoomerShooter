@@ -2,6 +2,7 @@
 
 #include "Weapon/HLB_WeaponComponent.h"
 
+#include "Camera/CameraComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Player/HLB_Player.h"
@@ -22,9 +23,9 @@ void UHLB_WeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (Weapons)
+	if (InitialWeapon)
 	{
-		UHLB_Weapon* WeaponObj = NewObject<UHLB_Weapon>(this, Weapons);
+		UHLB_Weapon* WeaponObj = NewObject<UHLB_Weapon>(this, InitialWeapon);
 		SetWeapon(WeaponObj);
 	}
 
@@ -95,9 +96,18 @@ void UHLB_WeaponComponent::SetWeapon(UHLB_Weapon* NewWeapon)
 
 void UHLB_WeaponComponent::Shoot()
 {
-	if (Weapon)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Shoot!"));
-		Weapon->Shoot();
-	}
+	if (!Weapon)
+		return;
+
+	AHLB_Player* Player = Cast<AHLB_Player>(GetOwner());
+
+	if (!Player)
+		return;
+
+	UCameraComponent* Camera = Player->GetFirstPersonCameraComponent();
+
+	if (!Camera)
+		return;
+
+	Weapon->Shoot(Camera->GetComponentLocation(), Camera->GetForwardVector(), Player);
 }

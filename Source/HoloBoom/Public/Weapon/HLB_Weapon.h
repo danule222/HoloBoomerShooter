@@ -33,6 +33,8 @@ public:
 	int32 Speed;
 	UPROPERTY(EditDefaultsOnly)
 	UTexture2D* Crosshair;
+	UPROPERTY(EditDefaultsOnly)
+	TEnumAsByte<ECollisionChannel> TraceChannel;
 
-	void Shoot();
+	void Shoot(FVector Start, FVector Direction, AActor* Ignore);
 };
