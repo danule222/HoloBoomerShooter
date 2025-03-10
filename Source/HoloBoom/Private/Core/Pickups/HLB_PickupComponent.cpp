@@ -2,8 +2,8 @@
 
 #include "Core/Pickups/HLB_PickupComponent.h"
 
+#include "Characters/Player/HLB_Player.h"
 #include "Core/Pickups/HLB_Pickup.h"
-#include "Player/HLB_Player.h"
 
 void UHLB_PickupComponent::BeginPlay()
 {

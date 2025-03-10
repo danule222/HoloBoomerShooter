@@ -2,7 +2,7 @@
 
 #include "Core/Pickups/HLB_PickupWeapon.h"
 
-#include "Player/HLB_Player.h"
+#include "Characters/Player/HLB_Player.h"
 #include "Weapon/HLB_Weapon.h"
 #include "Weapon/HLB_WeaponComponent.h"
 

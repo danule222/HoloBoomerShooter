@@ -2,9 +2,9 @@
 
 #pragma once
 
+#include "Characters/Player/HLB_Player.h"
 #include "Components/SphereComponent.h"
 #include "CoreMinimal.h"
-#include "Player/HLB_Player.h"
 
 #include "HoloBoomPickUpComponent.generated.h"
 

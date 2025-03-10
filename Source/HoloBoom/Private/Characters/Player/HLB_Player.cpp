@@ -1,6 +1,6 @@
 // Xarblanca Studios 2025. All rights reserved.
 
-#include "Player/HLB_Player.h"
+#include "Characters/Player/HLB_Player.h"
 
 #include "../HoloBoomProjectile.h"
 #include "Animation/AnimInstance.h"
