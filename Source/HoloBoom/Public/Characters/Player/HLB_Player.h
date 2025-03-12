@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Characters/HLB_Character.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
@@ -21,7 +22,7 @@ struct FInputActionValue;
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config = Game)
-class AHLB_Player : public ACharacter
+class AHLB_Player : public AHLB_Character
 {
 	GENERATED_BODY()
 
@@ -62,9 +63,4 @@ public:
 	{
 		return FirstPersonCameraComponent;
 	}
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
-	UHLB_WeaponComponent* WeaponComponent;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Health, meta = (AllowPrivateAccess = "true"))
-	UHLB_HealthComponent* HealthComponent;
 };

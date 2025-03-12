@@ -8,6 +8,7 @@ void AHLB_EnemyAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	// Player to chase
 	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 }
 
@@ -16,7 +17,7 @@ void AHLB_EnemyAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (PlayerPawn)
-	{
+	{					     // Tolerance
 		MoveToActor(PlayerPawn, 100.0f);
 	}
 }

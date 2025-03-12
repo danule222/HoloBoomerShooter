@@ -3,6 +3,7 @@
 #include "Characters/Enemies/HLB_Enemy.h"
 
 #include "Characters/Enemies/HLB_EnemyAIController.h"
+#include "Core/ActorComponents/HLB_HealthComponent.h"
 
 // Sets default values
 AHLB_Enemy::AHLB_Enemy()

@@ -28,8 +28,8 @@ public:
 	void RestoreInitialHealth();
 
 private:
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-	int32 InitialHealth;
+	int32 MaxHealth;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	int32 Health;
 };

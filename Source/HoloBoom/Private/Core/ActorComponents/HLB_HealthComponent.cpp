@@ -1,6 +1,5 @@
 // Xarblanca Studios 2025. All rights reserved.
 
-
 #include "Core/ActorComponents/HLB_HealthComponent.h"
 
 // Sets default values for this component's properties
@@ -13,15 +12,13 @@ UHLB_HealthComponent::UHLB_HealthComponent()
 	// ...
 }
 
-
 // Called when the game starts
 void UHLB_HealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Health = InitialHealth;
+	MaxHealth = Health;
 }
-
 
 // Called every frame
 void UHLB_HealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -37,7 +34,9 @@ void UHLB_HealthComponent::DoDamage(int32 Damage)
 
 	if (Health <= 0)
 	{
-		// Die :(
+		GetOwner()->Destroy();
+
+		UE_LOG(LogTemp, Warning, TEXT("%d"), Damage);
 	}
 }
 
@@ -47,9 +46,9 @@ void UHLB_HealthComponent::DoHeal(int32 Heal)
 
 	Health += Heal;
 
-	if (Health > InitialHealth)
+	if (Health > MaxHealth)
 	{
-		Health = InitialHealth;
+		Health = MaxHealth;
 	}
 }
 
@@ -57,6 +56,5 @@ void UHLB_HealthComponent::RestoreInitialHealth()
 {
 	UE_LOG(LogTemp, Warning, TEXT(__FUNCTION__));
 
-	Health = InitialHealth;
+	Health = MaxHealth;
 }
-

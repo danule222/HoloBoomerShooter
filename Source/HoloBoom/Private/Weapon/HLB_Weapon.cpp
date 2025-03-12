@@ -2,6 +2,10 @@
 
 #include "Weapon/HLB_Weapon.h"
 
+#include "Characters/HLB_Character.h"
+#include "Core/GameFramework/HLB_Globals.h"
+#include "Core/ActorComponents/HLB_HealthComponent.h"
+
 UHLB_Weapon::UHLB_Weapon()
 {
 }
@@ -14,19 +18,27 @@ void UHLB_Weapon::Shoot(FVector Start, FVector Direction, AActor* Ignore)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Pium - %s"), *Name.ToString());
 
-	if (UWorld *World = GetWorld())
+	if (UWorld* World = GetWorld())
 	{
 		FVector End = Start + (Direction * Range);
 
 		FHitResult HitResult;
 		FCollisionQueryParams Params;
 		Params.TraceTag = TEXT("Shoot trace");
-		
+
 		if (Ignore)
 			Params.AddIgnoredActor(Ignore);
 
 		World->LineTraceSingleByChannel(HitResult, Start, End, TraceChannel, Params);
 
-		// TODO: Check if enemy was hit
+		AActor* ActorHit = HitResult.GetActor();
+
+		if (!ActorHit)
+			return;
+
+		if (AHLB_Character* Character = Cast<AHLB_Character>(ActorHit))
+		{
+			Character->HealthComponent->DoDamage(Damage);
+		}
 	}
 }
