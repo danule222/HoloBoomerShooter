@@ -26,6 +26,32 @@ class AHLB_Player : public AHLB_Character
 {
 	GENERATED_BODY()
 
+public:
+	AHLB_Player();
+
+	USkeletalMeshComponent* GetMesh1P() const
+	{
+		return Mesh1P;
+	}
+	UCameraComponent* GetFirstPersonCameraComponent() const
+	{
+		return FirstPersonCameraComponent;
+	}
+
+	virtual void Die() override;
+
+protected:
+	virtual void BeginPlay() override;
+
+	void Move(const FInputActionValue& Value);
+	void Look(const FInputActionValue& Value);
+
+	// APawn interface
+	virtual void NotifyControllerChanged() override;
+	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
+	// End of APawn interface
+
+private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Mesh, meta = (AllowPrivateAccess = "true"))
 	USkeletalMeshComponent* Mesh1P;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -38,29 +64,4 @@ class AHLB_Player : public AHLB_Character
 	UInputAction* MoveAction;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
-
-public:
-	AHLB_Player();
-
-protected:
-	virtual void BeginPlay() override;
-
-	void Move(const FInputActionValue& Value);
-	void Look(const FInputActionValue& Value);
-
-protected:
-	// APawn interface
-	virtual void NotifyControllerChanged() override;
-	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
-	// End of APawn interface
-
-public:
-	USkeletalMeshComponent* GetMesh1P() const
-	{
-		return Mesh1P;
-	}
-	UCameraComponent* GetFirstPersonCameraComponent() const
-	{
-		return FirstPersonCameraComponent;
-	}
 };

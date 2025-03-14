@@ -2,6 +2,8 @@
 
 #include "Core/ActorComponents/HLB_HealthComponent.h"
 
+#include "Characters/HLB_Character.h"
+
 // Sets default values for this component's properties
 UHLB_HealthComponent::UHLB_HealthComponent()
 {
@@ -28,22 +30,20 @@ void UHLB_HealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UHLB_HealthComponent::DoDamage(int32 Damage)
 {
-	UE_LOG(LogTemp, Warning, TEXT(__FUNCTION__));
-
 	Health -= Damage;
 
+	// DIE
 	if (Health <= 0)
 	{
-		GetOwner()->Destroy();
+		Cast<AHLB_Character>(GetOwner())->Die();
+		RestoreInitialHealth();
 
-		UE_LOG(LogTemp, Warning, TEXT("%d"), Damage);
+		UE_LOG(LogTemp, Display, TEXT("HEALTHCOMP: %s dead"), *GetOwner()->GetFName().ToString());
 	}
 }
 
 void UHLB_HealthComponent::DoHeal(int32 Heal)
 {
-	UE_LOG(LogTemp, Warning, TEXT(__FUNCTION__));
-
 	Health += Heal;
 
 	if (Health > MaxHealth)
@@ -54,7 +54,5 @@ void UHLB_HealthComponent::DoHeal(int32 Heal)
 
 void UHLB_HealthComponent::RestoreInitialHealth()
 {
-	UE_LOG(LogTemp, Warning, TEXT(__FUNCTION__));
-
 	Health = MaxHealth;
 }

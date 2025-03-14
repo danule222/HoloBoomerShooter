@@ -10,6 +10,9 @@ void AHLB_EnemyAIController::BeginPlay()
 
 	// Player to chase
 	PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+
+	if (!PlayerPawn)
+		UE_LOG(LogTemp, Error, TEXT("AI: Spawned enemy has no target"));
 }
 
 void AHLB_EnemyAIController::Tick(float DeltaTime)
@@ -17,7 +20,7 @@ void AHLB_EnemyAIController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (PlayerPawn)
-	{					     // Tolerance
+	{
 		MoveToActor(PlayerPawn, 100.0f);
 	}
 }

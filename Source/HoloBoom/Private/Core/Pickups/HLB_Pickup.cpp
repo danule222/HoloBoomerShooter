@@ -38,5 +38,5 @@ void AHLB_Pickup::Tick(float DeltaTime)
 
 void AHLB_Pickup::Pick(AHLB_Player* Player)
 {
-	UE_LOG(LogTemp, Error, TEXT("Pick function not implemented."));
+	UE_LOG(LogTemp, Error, TEXT("PICKUP: Pick function not implemented."));
 }

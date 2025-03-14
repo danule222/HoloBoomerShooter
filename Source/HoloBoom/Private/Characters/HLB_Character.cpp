@@ -24,6 +24,11 @@ void AHLB_Character::BeginPlay()
 	Super::BeginPlay();
 }
 
+void AHLB_Character::Die()
+{
+	UE_LOG(LogTemp, Error, TEXT("CHARACTERS: Die function was not implemented"));
+}
+
 // Called every frame
 void AHLB_Character::Tick(float DeltaTime)
 {

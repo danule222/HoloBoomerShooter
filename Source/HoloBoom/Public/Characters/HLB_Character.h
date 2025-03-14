@@ -18,11 +18,6 @@ public:
 	// Sets default values for this character's properties
 	AHLB_Character();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -33,4 +28,10 @@ public:
 	UHLB_WeaponComponent* WeaponComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Health, meta = (AllowPrivateAccess = "true"))
 	UHLB_HealthComponent* HealthComponent;
+
+	virtual void Die();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 };

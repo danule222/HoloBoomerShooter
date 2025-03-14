@@ -8,7 +8,7 @@
 #include "HLB_EnemyAIController.generated.h"
 
 /**
- *
+ * Enemy's AI logic
  */
 UCLASS()
 class HOLOBOOM_API AHLB_EnemyAIController : public AAIController

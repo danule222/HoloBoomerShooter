@@ -90,7 +90,7 @@ void UHLB_WeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UHLB_WeaponComponent::SetWeapon(UHLB_Weapon* NewWeapon)
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s"), *NewWeapon->Name.ToString());
+	UE_LOG(LogTemp, Display, TEXT("WEAPONS: %s weapon set"), *NewWeapon->Name.ToString());
 	Weapon = NewWeapon;
 }
 

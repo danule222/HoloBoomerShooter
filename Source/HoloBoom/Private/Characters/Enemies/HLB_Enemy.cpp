@@ -4,6 +4,8 @@
 
 #include "Characters/Enemies/HLB_EnemyAIController.h"
 #include "Core/ActorComponents/HLB_HealthComponent.h"
+#include "Core/GameModes/HLB_ZombieGameMode.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AHLB_Enemy::AHLB_Enemy()
@@ -27,4 +29,17 @@ void AHLB_Enemy::Tick(float DeltaTime)
 void AHLB_Enemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+void AHLB_Enemy::Die()
+{
+	AGameModeBase* GameMode = UGameplayStatics::GetGameMode(GetWorld());
+	if (AHLB_ZombieGameMode* ZombieGameMode = Cast<AHLB_ZombieGameMode>(GameMode))
+	{
+		ZombieGameMode->EnemyKilled(this);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("ENEMIES: Enemy is not in a Zombie Game Mode"));
+	}
 }

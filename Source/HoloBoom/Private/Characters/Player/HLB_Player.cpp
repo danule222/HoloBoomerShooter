@@ -73,6 +73,11 @@ void AHLB_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	}
 }
 
+void AHLB_Player::Die()
+{
+	UE_LOG(LogTemp, Warning, TEXT("PLAYER: Implement player's death"));
+}
+
 void AHLB_Player::BeginPlay()
 {
 	Super::BeginPlay();
