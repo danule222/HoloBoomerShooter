@@ -5,7 +5,9 @@
 #include "Characters/Enemies/HLB_Enemy.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Placeables/Placements/HLB_EnemySpawner.h"
+#include "UI/HUD/HLB_ZombieHUD.h"
 
 void AHLB_ZombieGameMode::RegisterSpawner(AHLB_EnemySpawner* Spawner)
 {
@@ -63,19 +65,45 @@ void AHLB_ZombieGameMode::NewRound()
 	UE_LOG(LogTemp, Display, TEXT("ROUNDS: Round %d finished"), ActualRound);
 
 	ActualRound++;
-	EnemiesSpawnedThisRound = 0;
-	KilledEnemies = 0;
-	InitialEnemies += NewEnemiesPerRound;
+	SetRoundHUD();
 
 	// Start new round timer
-	GetWorld()->GetTimerManager().SetTimer(NewRoundTimerHandle, this, &AHLB_ZombieGameMode::StartNewRound, TimeBetweenRounds, false);
+	GetWorld()->GetTimerManager().SetTimer(
+		NewRoundTimerHandle, this, &AHLB_ZombieGameMode::StartNewRound, TimeBetweenRounds, false);
 }
 
 void AHLB_ZombieGameMode::StartNewRound()
 {
+	EnemiesSpawnedThisRound = 0;
+	KilledEnemies = 0;
+	InitialEnemies += NewEnemiesPerRound;
+
 	SetSpawners();
 
 	UE_LOG(LogTemp, Display, TEXT("ROUNDS: Round %d started"), ActualRound);
+}
+
+void AHLB_ZombieGameMode::SetRoundHUD()
+{
+	if (UWorld* World = GetWorld())
+	{
+		for (int32 i = 0; i < GetNumPlayers(); i++)
+		{
+			APlayerController* PCon = UGameplayStatics::GetPlayerController(World, i);
+			if (!PCon)
+				continue;
+
+			AHUD* HUD = PCon->GetHUD();
+			if (!HUD)
+				continue;
+
+			AHLB_ZombieHUD* ZHUD = Cast<AHLB_ZombieHUD>(HUD);
+			if (!ZHUD)
+				continue;
+
+			ZHUD->SetRound(ActualRound);
+		}
+	}
 }
 
 void AHLB_ZombieGameMode::SpawnEnemy()

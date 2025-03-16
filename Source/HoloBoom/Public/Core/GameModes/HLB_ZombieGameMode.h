@@ -54,6 +54,7 @@ private:
 	void NewRound();
 	// Function called by a timer to start a new round
 	void StartNewRound();
+	void SetRoundHUD();
 
 	/**
 	 * SPAWNERS
