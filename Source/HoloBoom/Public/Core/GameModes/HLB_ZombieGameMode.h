@@ -41,10 +41,19 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Rounds, meta = (AllowPrivateAccess = "true"))
 	int32 NewEnemiesPerRound;
 
-	int32 EnemiesSpawnedThisRound;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Rounds, meta = (AllowPrivateAccess = "true", Units = "Seconds"))
+	int32 TimeBetweenRounds;
 
+	int32 EnemiesSpawnedThisRound;
+	int32 KilledEnemies;
+	FTimerHandle NewRoundTimerHandle;
+
+	// Function that only should be called at the start of the game
 	void SetRounds();
+	// Logic to start new round
 	void NewRound();
+	// Function called by a timer to start a new round
+	void StartNewRound();
 
 	/**
 	 * SPAWNERS

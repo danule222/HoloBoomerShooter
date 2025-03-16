@@ -26,6 +26,11 @@ void AHLB_ZombieGameMode::EnemyKilled(AHLB_Enemy* Enemy)
 
 		EnemyPool.Add(Enemy);
 	}
+
+	if (++KilledEnemies >= InitialEnemies)
+	{
+		NewRound();
+	}
 }
 
 void AHLB_ZombieGameMode::BeginPlay()
@@ -55,14 +60,34 @@ void AHLB_ZombieGameMode::SetRounds()
 
 void AHLB_ZombieGameMode::NewRound()
 {
+	UE_LOG(LogTemp, Display, TEXT("ROUNDS: Round %d finished"), ActualRound);
+
 	ActualRound++;
 	EnemiesSpawnedThisRound = 0;
+	KilledEnemies = 0;
+	InitialEnemies += NewEnemiesPerRound;
+
+	// Start new round timer
+	GetWorld()->GetTimerManager().SetTimer(NewRoundTimerHandle, this, &AHLB_ZombieGameMode::StartNewRound, TimeBetweenRounds, false);
+}
+
+void AHLB_ZombieGameMode::StartNewRound()
+{
+	SetSpawners();
+
+	UE_LOG(LogTemp, Display, TEXT("ROUNDS: Round %d started"), ActualRound);
 }
 
 void AHLB_ZombieGameMode::SpawnEnemy()
 {
 	if (EnemiesSpawnedThisRound + 1 > InitialEnemies)
+	{
+		// Stop spawner timer
+		GetWorld()->GetTimerManager().PauseTimer(SpawnerTimerHandle);
+		GetWorld()->GetTimerManager().ClearTimer(SpawnerTimerHandle);
+
 		return;
+	}
 
 	if (EnemyPool.Num() <= 0)
 		return;	   // No more enemies in pool
