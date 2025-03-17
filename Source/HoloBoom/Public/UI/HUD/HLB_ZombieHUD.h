@@ -7,6 +7,7 @@
 
 #include "HLB_ZombieHUD.generated.h"
 
+class UHLB_CrosshairWidget;
 class UHLB_ZombieHUDWidget;
 
 /**
@@ -19,6 +20,7 @@ class HOLOBOOM_API AHLB_ZombieHUD : public AHUD
 
 public:
 	void SetRound(int32 Round);
+	void SetCrosshair(UTexture2D* Crosshair);
 
 protected:
 	virtual void BeginPlay() override;

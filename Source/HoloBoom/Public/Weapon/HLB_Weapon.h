@@ -10,7 +10,7 @@ class UTexture2D;
 class UStaticMesh;
 
 /**
-Weapons base class.
+ * Weapons base class.
  */
 UCLASS(Blueprintable, BlueprintType)
 class HOLOBOOM_API UHLB_Weapon : public UObject
@@ -18,23 +18,30 @@ class HOLOBOOM_API UHLB_Weapon : public UObject
 	GENERATED_BODY()
 
 public:
-	UHLB_Weapon();
-	~UHLB_Weapon();
 
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMesh* Mesh;
+
 	UPROPERTY(EditDefaultsOnly)
 	FText Name;
+
 	UPROPERTY(EditDefaultsOnly)
 	int32 Damage;
-	UPROPERTY(EditDefaultsOnly)
+
+	UPROPERTY(EditDefaultsOnly, meta = (Units = "centimeters"))
 	int32 Range;
+
+	UPROPERTY(EditDefaultsOnly, meta = (Units = "seconds"))
+	float TimeBetweenShoots;
+
+	UPROPERTY(EditDefaultsOnly, meta = (Units = "seconds"))
+	float ReloadTime;
+
 	UPROPERTY(EditDefaultsOnly)
-	int32 Speed;
-	UPROPERTY(EditDefaultsOnly)
-	UTexture2D* Crosshair;
+	UTexture2D* DefaultCrosshair;
+
 	UPROPERTY(EditDefaultsOnly)
 	TEnumAsByte<ECollisionChannel> TraceChannel;
 
-	void Shoot(FVector Start, FVector Direction, AActor* Ignore);
+	virtual void Shoot(FVector Start, FVector Direction, AActor* Ignore);
 };

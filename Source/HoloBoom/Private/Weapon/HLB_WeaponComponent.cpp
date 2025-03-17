@@ -6,6 +6,7 @@
 #include "Characters/Player/HLB_Player.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "UI/HUD/HLB_ZombieHUD.h"
 #include "Weapon/HLB_Weapon.h"
 
 // Sets default values for this component's properties
@@ -92,6 +93,21 @@ void UHLB_WeaponComponent::SetWeapon(UHLB_Weapon* NewWeapon)
 {
 	UE_LOG(LogTemp, Display, TEXT("WEAPONS: %s weapon set"), *NewWeapon->Name.ToString());
 	Weapon = NewWeapon;
+
+	// Get HUD
+	UWorld* World = GetWorld();
+	if (!World)
+		return;
+	UPlayer* Player = GetOwner()->GetNetOwningPlayer();
+	if (!Player)
+		return;
+	AHUD* HUD = Player->GetPlayerController(World)->GetHUD();
+	
+	// Set crosshair
+	if (AHLB_ZombieHUD* ZHUD = Cast<AHLB_ZombieHUD>(HUD))
+	{
+		ZHUD->SetCrosshair(Weapon->DefaultCrosshair);
+	}
 }
 
 void UHLB_WeaponComponent::Shoot()

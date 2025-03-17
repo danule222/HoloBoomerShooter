@@ -6,14 +6,6 @@
 #include "Core/GameFramework/HLB_Globals.h"
 #include "Core/ActorComponents/HLB_HealthComponent.h"
 
-UHLB_Weapon::UHLB_Weapon()
-{
-}
-
-UHLB_Weapon::~UHLB_Weapon()
-{
-}
-
 void UHLB_Weapon::Shoot(FVector Start, FVector Direction, AActor* Ignore)
 {
 	UE_LOG(LogTemp, Display, TEXT("WEAPONS: Pium - %s weapon"), *Name.ToString());
