@@ -53,7 +53,12 @@ void UHLB_WeaponComponent::BeginPlay()
 			if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerController->InputComponent))
 			{
 				// Fire
-				EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &UHLB_WeaponComponent::Shoot);
+				EnhancedInputComponent->BindAction(
+					ShootAction, ETriggerEvent::Started, this, &UHLB_WeaponComponent::Shoot, ETriggerEvent::Started);
+				EnhancedInputComponent->BindAction(
+					ShootAction, ETriggerEvent::Triggered, this, &UHLB_WeaponComponent::Shoot, ETriggerEvent::Triggered);
+				EnhancedInputComponent->BindAction(
+					ShootAction, ETriggerEvent::Completed, this, &UHLB_WeaponComponent::Shoot, ETriggerEvent::Completed);
 			}
 		}
 	}
@@ -91,7 +96,6 @@ void UHLB_WeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UHLB_WeaponComponent::SetWeapon(UHLB_Weapon* NewWeapon)
 {
-	UE_LOG(LogTemp, Display, TEXT("WEAPONS: %s weapon set"), *NewWeapon->Name.ToString());
 	Weapon = NewWeapon;
 
 	// Get HUD
@@ -102,28 +106,26 @@ void UHLB_WeaponComponent::SetWeapon(UHLB_Weapon* NewWeapon)
 	if (!Player)
 		return;
 	AHUD* HUD = Player->GetPlayerController(World)->GetHUD();
-	
+
 	// Set crosshair
 	if (AHLB_ZombieHUD* ZHUD = Cast<AHLB_ZombieHUD>(HUD))
 	{
 		ZHUD->SetCrosshair(Weapon->DefaultCrosshair);
 	}
+
+	UE_LOG(LogTemp, Display, TEXT("WEAPONS: %s weapon set"), *NewWeapon->Name.ToString());
 }
 
-void UHLB_WeaponComponent::Shoot()
+void UHLB_WeaponComponent::Shoot(ETriggerEvent TriggerEvent)
 {
 	if (!Weapon)
 		return;
-
 	AHLB_Player* Player = Cast<AHLB_Player>(GetOwner());
-
 	if (!Player)
 		return;
-
 	UCameraComponent* Camera = Player->GetFirstPersonCameraComponent();
-
 	if (!Camera)
 		return;
 
-	Weapon->Shoot(Camera->GetComponentLocation(), Camera->GetForwardVector(), Player);
+	Weapon->Shoot(Camera->GetComponentLocation(), Camera->GetForwardVector(), Player, TriggerEvent);
 }

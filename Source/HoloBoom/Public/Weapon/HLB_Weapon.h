@@ -9,6 +9,8 @@
 class UTexture2D;
 class UStaticMesh;
 
+enum class ETriggerEvent : uint8;
+
 /**
  * Weapons base class.
  */
@@ -18,7 +20,6 @@ class HOLOBOOM_API UHLB_Weapon : public UObject
 	GENERATED_BODY()
 
 public:
-
 	UPROPERTY(EditDefaultsOnly)
 	UStaticMesh* Mesh;
 
@@ -43,5 +44,20 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TEnumAsByte<ECollisionChannel> TraceChannel;
 
-	virtual void Shoot(FVector Start, FVector Direction, AActor* Ignore);
+	virtual void PostInitProperties() override;
+
+	void Shoot(FVector Start, FVector Direction, AActor* Ignore, const ETriggerEvent& TriggerEvent);
+
+protected:
+	/**
+	 * Implementation of the shoot function.
+	 * 
+	 * \return True if the shoot has been fired, False if not.
+	 */
+	virtual bool ShootImpl(FVector Start, FVector Direction, AActor* Ignore, const ETriggerEvent& TriggerEvent);
+
+	bool CanShoot();
+
+private:
+	float LastShootTime;
 };

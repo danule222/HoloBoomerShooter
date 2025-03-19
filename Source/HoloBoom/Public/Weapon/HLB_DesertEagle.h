@@ -14,4 +14,7 @@ UCLASS()
 class HOLOBOOM_API UHLB_DesertEagle : public UHLB_Weapon
 {
 	GENERATED_BODY()
+
+protected:
+	virtual bool ShootImpl(FVector Start, FVector Direction, AActor* Ignore, const ETriggerEvent& TriggerEvent) override;
 };

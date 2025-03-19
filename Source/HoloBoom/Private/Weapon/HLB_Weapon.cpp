@@ -3,34 +3,44 @@
 #include "Weapon/HLB_Weapon.h"
 
 #include "Characters/HLB_Character.h"
-#include "Core/GameFramework/HLB_Globals.h"
 #include "Core/ActorComponents/HLB_HealthComponent.h"
+#include "Core/GameFramework/HLB_Globals.h"
+#include "InputTriggers.h"
 
-void UHLB_Weapon::Shoot(FVector Start, FVector Direction, AActor* Ignore)
+void UHLB_Weapon::PostInitProperties()
 {
-	UE_LOG(LogTemp, Display, TEXT("WEAPONS: Pium - %s weapon"), *Name.ToString());
+	Super::PostInitProperties();
 
-	if (UWorld* World = GetWorld())
+	LastShootTime = -TimeBetweenShoots;
+}
+
+void UHLB_Weapon::Shoot(FVector Start, FVector Direction, AActor* Ignore, const ETriggerEvent& TriggerEvent)
+{
+	if (!CanShoot())
+		return;
+
+	bool DidShoot = ShootImpl(Start, Direction, Ignore, TriggerEvent);
+
+	if (DidShoot)
 	{
-		FVector End = Start + (Direction * Range);
-
-		FHitResult HitResult;
-		FCollisionQueryParams Params;
-		Params.TraceTag = TEXT("Shoot trace");
-
-		if (Ignore)
-			Params.AddIgnoredActor(Ignore);
-
-		World->LineTraceSingleByChannel(HitResult, Start, End, TraceChannel, Params);
-
-		AActor* ActorHit = HitResult.GetActor();
-
-		if (!ActorHit)
-			return;
-
-		if (AHLB_Character* Character = Cast<AHLB_Character>(ActorHit))
-		{
-			Character->HealthComponent->DoDamage(Damage);
-		}
+		LastShootTime = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Display, TEXT("WEAPONS: Pium - %s weapon"), *Name.ToString());
 	}
+}
+
+bool UHLB_Weapon::ShootImpl(FVector Start, FVector Direction, AActor* Ignore, const ETriggerEvent& TriggerEvent)
+{
+	UE_LOG(LogTemp, Error, TEXT("WEAPONS: %s's shoot not implemented."), *Name.ToString());
+
+	return false;
+}
+
+bool UHLB_Weapon::CanShoot()
+{
+	float CurrentTime = GetWorld()->GetTimeSeconds();
+
+	if (CurrentTime - LastShootTime >= TimeBetweenShoots)
+		return true;
+	else
+		return false;
 }
