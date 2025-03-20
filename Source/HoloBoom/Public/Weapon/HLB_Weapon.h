@@ -8,6 +8,7 @@
 
 class UTexture2D;
 class UStaticMesh;
+class AHLB_ZombieHUD;
 
 enum class ETriggerEvent : uint8;
 
@@ -20,33 +21,37 @@ class HOLOBOOM_API UHLB_Weapon : public UObject
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Aspect)
 	UStaticMesh* Mesh;
 
-	UPROPERTY(EditDefaultsOnly)
-	FText Name;
-
-	UPROPERTY(EditDefaultsOnly)
-	int32 Damage;
-
-	UPROPERTY(EditDefaultsOnly, meta = (Units = "centimeters"))
-	int32 Range;
-
-	UPROPERTY(EditDefaultsOnly, meta = (Units = "seconds"))
-	float TimeBetweenShoots;
-
-	UPROPERTY(EditDefaultsOnly, meta = (Units = "seconds"))
-	float ReloadTime;
-
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = Aspect)
 	UTexture2D* DefaultCrosshair;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = General)
+	FText Name;
+
+	UPROPERTY(EditDefaultsOnly, Category = Statistics)
+	int32 Damage;
+
+	UPROPERTY(EditDefaultsOnly, Category = Statistics, meta = (Units = "centimeters"))
+	int32 Range;
+
+	UPROPERTY(EditDefaultsOnly, Category = Statistics, meta = (Units = "seconds"))
+	float TimeBetweenShoots;
+
+	UPROPERTY(EditDefaultsOnly, Category = Statistics, meta = (Units = "seconds"))
+	float ReloadTime;
+
+	UPROPERTY(EditDefaultsOnly, Category = Functionality)
 	TEnumAsByte<ECollisionChannel> TraceChannel;
 
 	virtual void PostInitProperties() override;
 
+	virtual void Initialize(AHLB_ZombieHUD* ZHUD);
+
 	void Shoot(FVector Start, FVector Direction, AActor* Ignore, const ETriggerEvent& TriggerEvent);
+
+	void Reload();
 
 protected:
 	/**
@@ -58,6 +63,19 @@ protected:
 
 	bool CanShoot();
 
-private:
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = Ammo, meta = (AllowPrivateAccess = "true"))
+	int32 AmmoCapacity;
+
+	UPROPERTY(EditDefaultsOnly, Category = Ammo, meta = (AllowPrivateAccess = "true"))
+	int32 MagazineCapacity;
+
+	int32 Ammo;
+	int32 Magazines;
 	float LastShootTime;
+	bool bIsReloading;
+	FTimerHandle ReloadTimerHandle;
+	AHLB_ZombieHUD* ZHUD;
+
+	void FinishReload();
 };

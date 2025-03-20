@@ -5,6 +5,7 @@
 #include "Characters/HLB_Character.h"
 #include "Core/ActorComponents/HLB_HealthComponent.h"
 #include "InputTriggers.h"
+#include "UI/HUD/HLB_ZombieHUD.h"
 
 bool UHLB_DesertEagle::ShootImpl(FVector Start, FVector Direction, AActor* Ignore, const ETriggerEvent& TriggerEvent)
 {
@@ -13,6 +14,12 @@ bool UHLB_DesertEagle::ShootImpl(FVector Start, FVector Direction, AActor* Ignor
 		return false;
 	if (TriggerEvent == ETriggerEvent::Completed)
 		return false;
+
+	// Substract Ammo
+	Ammo--;
+
+	// Refresh HUD
+	ZHUD->SetAmmo(Ammo);
 
 	UWorld* World = GetWorld();
 	if (!World)

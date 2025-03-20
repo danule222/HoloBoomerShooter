@@ -46,8 +46,13 @@ private:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 	UInputAction* ShootAction;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UInputAction* ReloadAction;
+
 	UPROPERTY()
 	UHLB_Weapon* Weapon;
 
 	void Shoot(ETriggerEvent TriggerEvent);
+
+	void Reload();
 };

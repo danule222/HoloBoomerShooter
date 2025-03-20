@@ -59,6 +59,9 @@ void UHLB_WeaponComponent::BeginPlay()
 					ShootAction, ETriggerEvent::Triggered, this, &UHLB_WeaponComponent::Shoot, ETriggerEvent::Triggered);
 				EnhancedInputComponent->BindAction(
 					ShootAction, ETriggerEvent::Completed, this, &UHLB_WeaponComponent::Shoot, ETriggerEvent::Completed);
+
+				// Reload
+				EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Triggered, this, &UHLB_WeaponComponent::Reload);
 			}
 		}
 	}
@@ -96,6 +99,12 @@ void UHLB_WeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UHLB_WeaponComponent::SetWeapon(UHLB_Weapon* NewWeapon)
 {
+	if (!NewWeapon)
+	{
+		UE_LOG(LogTemp, Error, TEXT("WEAPONS: SetWeapon was invoked with null parameter."));
+		return;
+	}
+
 	Weapon = NewWeapon;
 
 	// Get HUD
@@ -106,12 +115,11 @@ void UHLB_WeaponComponent::SetWeapon(UHLB_Weapon* NewWeapon)
 	if (!Player)
 		return;
 	AHUD* HUD = Player->GetPlayerController(World)->GetHUD();
+	AHLB_ZombieHUD* ZHUD = Cast<AHLB_ZombieHUD>(HUD);
+	if (!ZHUD)
+		return;
 
-	// Set crosshair
-	if (AHLB_ZombieHUD* ZHUD = Cast<AHLB_ZombieHUD>(HUD))
-	{
-		ZHUD->SetCrosshair(Weapon->DefaultCrosshair);
-	}
+	Weapon->Initialize(ZHUD);
 
 	UE_LOG(LogTemp, Display, TEXT("WEAPONS: %s weapon set"), *NewWeapon->Name.ToString());
 }
@@ -128,4 +136,12 @@ void UHLB_WeaponComponent::Shoot(ETriggerEvent TriggerEvent)
 		return;
 
 	Weapon->Shoot(Camera->GetComponentLocation(), Camera->GetForwardVector(), Player, TriggerEvent);
+}
+
+void UHLB_WeaponComponent::Reload()
+{
+	if (!Weapon)
+		return;
+
+	Weapon->Reload();
 }

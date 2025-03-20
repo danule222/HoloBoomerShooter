@@ -21,6 +21,9 @@ class HOLOBOOM_API AHLB_ZombieHUD : public AHUD
 public:
 	void SetRound(int32 Round);
 	void SetCrosshair(UTexture2D* Crosshair);
+	void SetAmmo(int32 Ammo);
+	void SetMagazines(int32 Magazines);
+	void SetWeaponName(FText WeaponName);
 
 protected:
 	virtual void BeginPlay() override;

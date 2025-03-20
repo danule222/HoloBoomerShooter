@@ -7,6 +7,7 @@
 
 #include "HLB_ZombieHUDWidget.generated.h"
 
+class UHLB_AmmoWidget;
 class UHLB_CrosshairWidget;
 class UHLB_RoundCounterWidget;
 
@@ -21,6 +22,10 @@ class HOLOBOOM_API UHLB_ZombieHUDWidget : public UUserWidget
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	UHLB_RoundCounterWidget* RoundCounter;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
 	UHLB_CrosshairWidget* Crosshair;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	UHLB_AmmoWidget* Ammo;
 };
