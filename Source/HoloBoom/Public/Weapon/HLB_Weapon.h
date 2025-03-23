@@ -15,7 +15,7 @@ enum class ETriggerEvent : uint8;
 /**
  * Weapons base class.
  */
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Abstract)
 class HOLOBOOM_API UHLB_Weapon : public UObject
 {
 	GENERATED_BODY()
@@ -39,43 +39,24 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Statistics, meta = (Units = "seconds"))
 	float TimeBetweenShoots;
 
-	UPROPERTY(EditDefaultsOnly, Category = Statistics, meta = (Units = "seconds"))
-	float ReloadTime;
-
 	UPROPERTY(EditDefaultsOnly, Category = Functionality)
 	TEnumAsByte<ECollisionChannel> TraceChannel;
-
-	virtual void PostInitProperties() override;
 
 	virtual void Initialize(AHLB_ZombieHUD* ZHUD);
 
 	void Shoot(FVector Start, FVector Direction, AActor* Ignore, const ETriggerEvent& TriggerEvent);
 
-	void Reload();
-
 protected:
 	/**
 	 * Implementation of the shoot function.
-	 * 
+	 *
 	 * \return True if the shoot has been fired, False if not.
 	 */
 	virtual bool ShootImpl(FVector Start, FVector Direction, AActor* Ignore, const ETriggerEvent& TriggerEvent);
 
-	bool CanShoot();
+	virtual bool CanShoot();
 
 protected:
-	UPROPERTY(EditDefaultsOnly, Category = Ammo, meta = (AllowPrivateAccess = "true"))
-	int32 AmmoCapacity;
-
-	UPROPERTY(EditDefaultsOnly, Category = Ammo, meta = (AllowPrivateAccess = "true"))
-	int32 MagazineCapacity;
-
-	int32 Ammo;
-	int32 Magazines;
 	float LastShootTime;
-	bool bIsReloading;
-	FTimerHandle ReloadTimerHandle;
 	AHLB_ZombieHUD* ZHUD;
-
-	void FinishReload();
 };

@@ -18,3 +18,16 @@ void UHLB_AmmoWidget::SetWeaponName(FText WeaponName)
 {
 	TXT_WeaponName->SetText(FText::FromString(FString::Printf(TEXT("<WeaponName>%s</>"), *WeaponName.ToString())));
 }
+
+void UHLB_AmmoWidget::SetVisibility(ESlateVisibility Vsblty)
+{
+	switch (Vsblty)
+	{
+		case ESlateVisibility::Visible:
+			Super::SetVisibility(Vsblty);
+			break;
+		case ESlateVisibility::Hidden:
+			Super::SetVisibility(Vsblty);
+			break;
+	}
+}

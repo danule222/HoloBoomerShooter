@@ -24,6 +24,7 @@ public:
 	void SetAmmo(int32 Ammo);
 	void SetMagazines(int32 Magazines);
 	void SetWeaponName(FText WeaponName);
+	void SetAmmoVisibility(ESlateVisibility Visibility);
 
 protected:
 	virtual void BeginPlay() override;

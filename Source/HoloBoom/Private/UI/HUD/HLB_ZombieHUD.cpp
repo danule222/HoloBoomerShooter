@@ -33,6 +33,11 @@ void AHLB_ZombieHUD::SetWeaponName(FText WeaponName)
 	ZombieHUDWidget->Ammo->SetWeaponName(WeaponName);
 }
 
+void AHLB_ZombieHUD::SetAmmoVisibility(ESlateVisibility Visibility)
+{
+	ZombieHUDWidget->Ammo->SetVisibility(Visibility);
+}
+
 void AHLB_ZombieHUD::BeginPlay()
 {
 	Super::BeginPlay();

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Weapon/HLB_Weapon.h"
+#include "Weapon/HLB_Gun.h"
 
 #include "HLB_DesertEagle.generated.h"
 
@@ -11,7 +11,7 @@
  * Des
  */
 UCLASS()
-class HOLOBOOM_API UHLB_DesertEagle : public UHLB_Weapon
+class HOLOBOOM_API UHLB_DesertEagle : public UHLB_Gun
 {
 	GENERATED_BODY()
 

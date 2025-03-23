@@ -8,6 +8,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "UI/HUD/HLB_ZombieHUD.h"
 #include "Weapon/HLB_Weapon.h"
+#include "Weapon/HLB_Gun.h"
 
 // Sets default values for this component's properties
 UHLB_WeaponComponent::UHLB_WeaponComponent()
@@ -142,6 +143,9 @@ void UHLB_WeaponComponent::Reload()
 {
 	if (!Weapon)
 		return;
+	UHLB_Gun* Gun = Cast<UHLB_Gun>(Weapon);
+	if (!Gun)
+		return;
 
-	Weapon->Reload();
+	Gun->Reload();
 }

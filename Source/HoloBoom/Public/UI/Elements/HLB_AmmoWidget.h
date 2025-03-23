@@ -21,6 +21,7 @@ public:
 	void SetAmmo(int32 Ammo);
 	void SetMagazines(int32 Magazines);
 	void SetWeaponName(FText WeaponName);
+	void SetVisibility(ESlateVisibility Visibility) override;
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (BindWidget, AllowPrivateAccess = "true"))
