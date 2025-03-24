@@ -18,6 +18,16 @@ void AHLB_ZombieHUD::SetCrosshair(UTexture2D* Crosshair)
 	ZombieHUDWidget->Crosshair->SetCrosshair(Crosshair);
 }
 
+void AHLB_ZombieHUD::SetCrosshair(UTexture2D* CrosshairBackground, UTexture2D* CrosshairFill, float Min, float Max)
+{
+	ZombieHUDWidget->Crosshair->SetCrosshair(CrosshairBackground, CrosshairFill, Min, Max);
+}
+
+void AHLB_ZombieHUD::SetCrosshairProgress(float Progress)
+{
+	ZombieHUDWidget->Crosshair->SetCrosshairProgress(Progress);
+}
+
 void AHLB_ZombieHUD::SetAmmo(int32 Ammo)
 {
 	ZombieHUDWidget->Ammo->SetAmmo(Ammo);

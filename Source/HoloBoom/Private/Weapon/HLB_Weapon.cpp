@@ -14,9 +14,10 @@ void UHLB_Weapon::Initialize(AHLB_ZombieHUD* HUD)
 		return;
 
 	ZHUD = HUD;
+	if (UWorld* World = GetWorld())
+		LastShootTime = World->GetTimeSeconds() - TimeBetweenShoots;
 
 	ZHUD->SetCrosshair(DefaultCrosshair);
-	ZHUD->SetWeaponName(Name);
 }
 
 void UHLB_Weapon::Shoot(FVector Start, FVector Direction, AActor* Ignore, const ETriggerEvent& TriggerEvent)

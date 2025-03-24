@@ -23,6 +23,7 @@ void UHLB_Gun::Initialize(AHLB_ZombieHUD* HUD)
 	HUD->SetAmmoVisibility(ESlateVisibility::Visible);
 	HUD->SetAmmo(Ammo);
 	HUD->SetMagazines(Magazines);
+	ZHUD->SetWeaponName(Name);
 }
 
 void UHLB_Gun::Reload()
