@@ -42,6 +42,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void PostInitProperties() override;
 
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);

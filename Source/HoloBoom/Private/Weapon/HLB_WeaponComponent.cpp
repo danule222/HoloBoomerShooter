@@ -4,11 +4,12 @@
 
 #include "Camera/CameraComponent.h"
 #include "Characters/Player/HLB_Player.h"
+#include "Core/GameFramework/HLB_Globals.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "UI/HUD/HLB_ZombieHUD.h"
-#include "Weapon/HLB_Weapon.h"
 #include "Weapon/HLB_Gun.h"
+#include "Weapon/HLB_Weapon.h"
 
 // Sets default values for this component's properties
 UHLB_WeaponComponent::UHLB_WeaponComponent()
@@ -27,9 +28,33 @@ void UHLB_WeaponComponent::BeginPlay()
 
 	if (InitialWeapon)
 	{
-		UHLB_Weapon* WeaponObj = NewObject<UHLB_Weapon>(this, InitialWeapon);
+		UHLB_Weapon* WeaponObj = NewObject<UHLB_Weapon>(GetOwner(), InitialWeapon);
 		SetWeapon(WeaponObj);
 	}
+
+	// TEST
+
+	AHLB_Player* Playerop = Cast<AHLB_Player>(GetOwner());
+	if (Playerop)
+	{
+		if (GetOwner()->ActorHasTag(TAG_PLAYER) && Playerop->IsLocallyControlled())
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Buena ahi %d"), Playerop->Tags.Num());
+
+			AController* owo = Playerop->GetController();
+			if (APlayerController* jeje = Cast<APlayerController>(owo))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("jiji %d"), jeje->GetHUD());
+				if (AHLB_ZombieHUD* jud = Cast<AHLB_ZombieHUD>(jeje->GetHUD()))
+				{
+					jud->SetAmmo(22);
+					jud->SetMagazines(22);
+				}
+			}
+		}
+	}
+
+	// TEST
 
 	AHLB_Player* Character = Cast<AHLB_Player>(GetOwner());
 
@@ -100,6 +125,10 @@ void UHLB_WeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 
 void UHLB_WeaponComponent::SetWeapon(UHLB_Weapon* NewWeapon)
 {
+	// TODO: Implement enemy's weapons
+	if (GetOwner()->ActorHasTag(TAG_ENEMY))
+		return;
+
 	if (!NewWeapon)
 	{
 		UE_LOG(LogTemp, Error, TEXT("WEAPONS: SetWeapon was invoked with null parameter."));
@@ -119,6 +148,9 @@ void UHLB_WeaponComponent::SetWeapon(UHLB_Weapon* NewWeapon)
 	AHLB_ZombieHUD* ZHUD = Cast<AHLB_ZombieHUD>(HUD);
 	if (!ZHUD)
 		return;
+
+	if (!GetOwner()->HasAuthority())
+		UE_LOG(LogTemp, Warning, TEXT("%d"), ZHUD);
 
 	Weapon->Initialize(ZHUD);
 

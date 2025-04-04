@@ -7,6 +7,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Core/GameFramework/HLB_Globals.h"
 #include "Engine/LocalPlayer.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
@@ -84,6 +85,13 @@ void AHLB_Player::BeginPlay()
 
 	if (UWorld* World = GetWorld())
 		World->DebugDrawTraceTag = TEXT("Shoot trace");
+}
+
+void AHLB_Player::PostInitProperties()
+{
+	Super::PostInitProperties();
+
+	Tags.Add(TAG_PLAYER);
 }
 
 void AHLB_Player::Move(const FInputActionValue& Value)
