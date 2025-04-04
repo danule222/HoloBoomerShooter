@@ -4,6 +4,7 @@
 
 #include "Characters/Enemies/HLB_EnemyAIController.h"
 #include "Core/ActorComponents/HLB_HealthComponent.h"
+#include "Core/GameFramework/HLB_Globals.h"
 #include "Core/GameModes/HLB_ZombieGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -17,6 +18,13 @@ AHLB_Enemy::AHLB_Enemy()
 void AHLB_Enemy::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void AHLB_Enemy::PostInitProperties()
+{
+	Super::PostInitProperties();
+
+	Tags.Add(TAG_ENEMY);
 }
 
 // Called every frame
